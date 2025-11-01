@@ -1,0 +1,151 @@
+╔══════════════════════════════════════════════════════════════════════╗
+║           S&S FINANS UYGULAMASI - RELEASE INFORMATION               ║
+╚══════════════════════════════════════════════════════════════════════╝
+
+📦 RELEASE DETAILS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Version:        v0.0.1
+Release Date:   1 Kasım 2024
+Build Type:     Self-Contained Single-File Executable
+Platform:       Windows x64
+Framework:      .NET 8.0 (LTS)
+
+📁 RELEASE PACKAGE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+File Name:      SSFinapp-v0.0.1-win-x64.zip
+File Size:      68.01 MB
+SHA256:         71745EB89254B1D6B7512F269BBF99478ECCD1377C2328A52EA5ABC8108648D6
+
+Package Contents:
+  ✓ SSFinapp.UI.exe        - Main executable (~68 MB)
+  ✓ INSTALLATION.md        - Installation guide
+  ✓ LICENSE                - MIT License
+
+🎯 FEATURES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ Stock Management
+   • Product management (CRUD)
+   • Stock transactions (In/Out)
+   • Real-time stock levels
+   • Negative stock prevention
+
+✅ Customer & Current Account
+   • Customer management (CRUD)
+   • Contact information management
+   • Auto phone formatting (05XX XXX XX XX)
+   • Cash and goods transactions
+   • Balance calculation
+
+✅ Reporting & Export
+   • Excel export (all modules)
+   • Database backup
+   • Database restore
+
+✅ Security & Validation
+   • Input validation
+   • Business rule enforcement
+   • Cascade delete protection
+   • Exception handling
+
+🏗️ TECHNICAL SPECIFICATIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Architecture:   Clean Architecture (4 Layers)
+  • Domain      - Entities, Enums, Exceptions
+  • Data        - DbContext, Repositories, Migrations
+  • Business    - Services, Validations
+  • UI          - Forms, Helpers
+
+Database:       SQLite (Embedded)
+ORM:            Entity Framework Core 9.0
+UI Framework:   Windows Forms
+Patterns:       Repository + Unit of Work
+DI Container:   Microsoft.Extensions.DependencyInjection
+
+💻 SYSTEM REQUIREMENTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Operating System:    Windows 10/11 (64-bit)
+RAM:                 Minimum 2 GB
+Disk Space:          150 MB free space
+Additional Software: NONE REQUIRED! (Self-contained)
+Internet:            NOT REQUIRED (Offline)
+
+📋 INSTALLATION STEPS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. Download SSFinapp-v0.0.1-win-x64.zip
+2. Extract to desired location
+3. Run SSFinapp.UI.exe
+4. Done! Database will be created automatically.
+
+⚠️ If Windows SmartScreen warning appears:
+   "More info" → "Run anyway"
+
+📚 DOCUMENTATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ README.md                  - Main documentation
+✓ INSTALLATION.md            - Installation guide
+✓ QUICK_START.md             - Quick start guide
+✓ RELEASE_NOTES.md           - Release notes
+✓ GITHUB_RELEASE_GUIDE.md    - GitHub release guide
+✓ SUMMARY.md                 - Project summary
+✓ PROJECT_PLAN.md            - Project planning
+
+🔗 LINKS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Repository:      https://github.com/[USERNAME]/[REPO_NAME]
+Releases:        https://github.com/[USERNAME]/[REPO_NAME]/releases
+Issues:          https://github.com/[USERNAME]/[REPO_NAME]/issues
+Download:        https://github.com/[USERNAME]/[REPO_NAME]/releases/tag/v0.0.1
+
+🚀 GITHUB RELEASE STEPS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. Create GitHub repository (Public)
+2. Push code and tag:
+   git remote add origin https://github.com/USERNAME/REPO.git
+   git branch -M main
+   git push -u origin main
+   git push origin v0.0.1
+3. Create release on GitHub with tag v0.0.1
+4. Upload SSFinapp-v0.0.1-win-x64.zip
+5. Publish release!
+
+For detailed instructions, see: GITHUB_RELEASE_GUIDE.md
+
+📄 LICENSE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+MIT License - Open Source
+Copyright (c) 2024 S&S Finans Team
+
+🎯 ROADMAP (Future Versions)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+v0.1.0 - Improvements
+  • Dashboard/Summary view
+  • Advanced filtering
+  • Date range filters
+  • Graphical reports
+  • Low stock alerts
+
+v0.2.0 - User Management
+  • User system
+  • Authentication
+  • Role-based authorization
+
+v0.3.0 - UI/UX Improvements
+  • Modern theme
+  • Dark mode
+  • Keyboard shortcuts
+
+📞 SUPPORT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Found a bug or have a question?
+Open an issue: https://github.com/[USERNAME]/[REPO_NAME]/issues/new
+
+🙏 CREDITS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Developed with ❤️ by S&S Finans Team
+Release Date: 1 Kasım 2024
+
+╔══════════════════════════════════════════════════════════════════════╗
+║                    Thank you for using S&S Finapp!                   ║
+║                   Star us on GitHub if you like it! ⭐                ║
+╚══════════════════════════════════════════════════════════════════════╝
+
