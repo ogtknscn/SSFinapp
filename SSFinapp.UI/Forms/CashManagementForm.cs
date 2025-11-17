@@ -6,17 +6,14 @@ using SSFinapp.UI.Helpers;
 
 namespace SSFinapp.UI.Forms;
 
-/// <summary>
-/// Stok hareketi yönetimi formu
-/// </summary>
-public partial class StockTransactionForm : MaterialForm
+public partial class CashManagementForm : MaterialForm
 {
-    private readonly IStockService _stockService;
-    private List<StockTransaction> _allTransactions = new();
+    private readonly ICashService _cashService;
+    private List<CashTransaction> _allTransactions = new();
     
-    public StockTransactionForm(IStockService stockService)
+    public CashManagementForm(ICashService cashService)
     {
-        _stockService = stockService;
+        _cashService = cashService;
         InitializeComponent();
         LoadData();
         SetupKeyboardShortcuts();
@@ -36,40 +33,41 @@ public partial class StockTransactionForm : MaterialForm
     private async void LoadData()
     {
         await LoadTransactions();
-        await LoadProductsForFilter();
+        await LoadCashAccountsForFilter();
     }
     
     private async Task LoadTransactions()
     {
         try
         {
-            var transactions = await _stockService.GetAllTransactionsAsync();
+            var transactions = await _cashService.GetAllTransactionsAsync();
             _allTransactions = transactions.OrderByDescending(t => t.Tarih).ToList();
             
             dgvTransactions.DataSource = _allTransactions;
             
-            // Kolon başlıklarını Türkçeleştir
             if (dgvTransactions.Columns.Count > 0)
             {
                 dgvTransactions.Columns["Id"].HeaderText = "ID";
+                dgvTransactions.Columns["KasaId"].HeaderText = "Kasa ID";
                 dgvTransactions.Columns["Tarih"].HeaderText = "Tarih";
                 dgvTransactions.Columns["IslemTipi"].HeaderText = "İşlem Tipi";
-                dgvTransactions.Columns["UrunId"].HeaderText = "Ürün ID";
-                dgvTransactions.Columns["Miktar"].HeaderText = "Miktar";
-                dgvTransactions.Columns["Birim"].HeaderText = "Birim";
+                dgvTransactions.Columns["Tutar"].HeaderText = "Tutar";
                 dgvTransactions.Columns["Aciklama"].HeaderText = "Açıklama";
                 dgvTransactions.Columns["OlusturmaTarihi"].HeaderText = "Oluşturma Tarihi";
                 
-                // Navigation property'yi gizle
-                if (dgvTransactions.Columns.Contains("Urun"))
-                    dgvTransactions.Columns["Urun"].Visible = false;
+                if (dgvTransactions.Columns.Contains("Kasa"))
+                    dgvTransactions.Columns["Kasa"].Visible = false;
+                if (dgvTransactions.Columns.Contains("HedefHesapId"))
+                    dgvTransactions.Columns["HedefHesapId"].Visible = false;
+                if (dgvTransactions.Columns.Contains("HedefHesapTipi"))
+                    dgvTransactions.Columns["HedefHesapTipi"].Visible = false;
                     
-                // Tarih formatı
                 dgvTransactions.Columns["Tarih"].DefaultCellStyle.Format = "dd.MM.yyyy HH:mm";
                 dgvTransactions.Columns["OlusturmaTarihi"].DefaultCellStyle.Format = "dd.MM.yyyy HH:mm";
+                dgvTransactions.Columns["Tutar"].DefaultCellStyle.Format = "N2";
                 
-                // Miktar formatı
-                dgvTransactions.Columns["Miktar"].DefaultCellStyle.Format = "N2";
+                // İşlem tipi için görsel iyileştirme
+                dgvTransactions.Columns["IslemTipi"].DefaultCellStyle.Format = "g";
             }
             
             lblTotalCount.Text = $"Toplam: {_allTransactions.Count} işlem";
@@ -81,31 +79,31 @@ public partial class StockTransactionForm : MaterialForm
         }
     }
     
-    private async Task LoadProductsForFilter()
+    private async Task LoadCashAccountsForFilter()
     {
         try
         {
-            var products = await _stockService.GetAllProductsAsync();
-            cmbProductFilter.Items.Clear();
-            cmbProductFilter.Items.Add("Tüm Ürünler");
+            var accounts = await _cashService.GetAllCashAccountsAsync();
+            cmbCashAccountFilter.Items.Clear();
+            cmbCashAccountFilter.Items.Add("Tüm Kasalar");
             
-            foreach (var product in products.OrderBy(p => p.Ad))
+            foreach (var account in accounts.OrderBy(a => a.Ad))
             {
-                cmbProductFilter.Items.Add($"{product.Id} - {product.Ad}");
+                cmbCashAccountFilter.Items.Add($"{account.Id} - {account.Ad}");
             }
             
-            cmbProductFilter.SelectedIndex = 0;
+            cmbCashAccountFilter.SelectedIndex = 0;
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"Ürünler yüklenirken hata: {ex.Message}", "Hata", 
+            MessageBox.Show($"Kasalar yüklenirken hata: {ex.Message}", "Hata", 
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
     
     private void btnAdd_Click(object sender, EventArgs e)
     {
-        var form = Program.GetService<StockTransactionEditForm>();
+        var form = Program.GetService<CashTransactionEditForm>();
         if (form != null && form.ShowDialog() == DialogResult.OK)
         {
             LoadTransactions();
@@ -121,10 +119,10 @@ public partial class StockTransactionForm : MaterialForm
             return;
         }
         
-        var selectedTransaction = dgvTransactions.SelectedRows[0].DataBoundItem as StockTransaction;
+        var selectedTransaction = dgvTransactions.SelectedRows[0].DataBoundItem as CashTransaction;
         if (selectedTransaction != null)
         {
-            var form = Program.GetService<StockTransactionEditForm>();
+            var form = Program.GetService<CashTransactionEditForm>();
             if (form != null)
             {
                 form.LoadTransaction(selectedTransaction.Id);
@@ -145,13 +143,12 @@ public partial class StockTransactionForm : MaterialForm
             return;
         }
         
-        var selectedTransaction = dgvTransactions.SelectedRows[0].DataBoundItem as StockTransaction;
+        var selectedTransaction = dgvTransactions.SelectedRows[0].DataBoundItem as CashTransaction;
         if (selectedTransaction != null)
         {
             var result = MessageBox.Show(
                 $"Bu işlemi silmek istediğinizden emin misiniz?\n\n" +
-                $"İşlem: {selectedTransaction.IslemTipi}\n" +
-                $"Miktar: {selectedTransaction.Miktar} {selectedTransaction.Birim}\n" +
+                $"Tutar: {selectedTransaction.Tutar:N2} TL\n" +
                 $"Tarih: {selectedTransaction.Tarih:dd.MM.yyyy HH:mm}",
                 "İşlem Sil",
                 MessageBoxButtons.YesNo,
@@ -161,7 +158,7 @@ public partial class StockTransactionForm : MaterialForm
             {
                 try
                 {
-                    await _stockService.DeleteTransactionAsync(selectedTransaction.Id);
+                    await _cashService.DeleteTransactionAsync(selectedTransaction.Id);
                     MessageBox.Show("İşlem başarıyla silindi.", "Başarılı", 
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                     await LoadTransactions();
@@ -185,7 +182,7 @@ public partial class StockTransactionForm : MaterialForm
         this.Close();
     }
     
-    private void cmbProductFilter_SelectedIndexChanged(object sender, EventArgs e)
+    private void cmbCashAccountFilter_SelectedIndexChanged(object sender, EventArgs e)
     {
         ApplyFilters();
     }
@@ -199,24 +196,26 @@ public partial class StockTransactionForm : MaterialForm
     {
         var filtered = _allTransactions.AsEnumerable();
         
-        // Ürün filtresi
-        if (cmbProductFilter.SelectedIndex > 0)
+        if (cmbCashAccountFilter.SelectedIndex > 0)
         {
-            var selectedText = cmbProductFilter.SelectedItem?.ToString() ?? "";
-            if (int.TryParse(selectedText.Split('-')[0].Trim(), out int productId))
+            var selectedText = cmbCashAccountFilter.SelectedItem?.ToString() ?? "";
+            if (int.TryParse(selectedText.Split('-')[0].Trim(), out int cashAccountId))
             {
-                filtered = filtered.Where(t => t.UrunId == productId);
+                filtered = filtered.Where(t => t.KasaId == cashAccountId);
             }
         }
         
-        // İşlem tipi filtresi
         if (cmbTypeFilter.SelectedIndex == 1) // Giriş
         {
-            filtered = filtered.Where(t => t.IslemTipi == TransactionType.Giris);
+            filtered = filtered.Where(t => t.IslemTipi == CashTransactionType.Giris);
         }
         else if (cmbTypeFilter.SelectedIndex == 2) // Çıkış
         {
-            filtered = filtered.Where(t => t.IslemTipi == TransactionType.Cikis);
+            filtered = filtered.Where(t => t.IslemTipi == CashTransactionType.Cikis);
+        }
+        else if (cmbTypeFilter.SelectedIndex == 3) // Transfer
+        {
+            filtered = filtered.Where(t => t.IslemTipi == CashTransactionType.Transfer);
         }
         
         var result = filtered.ToList();

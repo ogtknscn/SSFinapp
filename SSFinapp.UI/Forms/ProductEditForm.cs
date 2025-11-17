@@ -1,12 +1,14 @@
+using MaterialSkin.Controls;
 using SSFinapp.Business.Services;
 using SSFinapp.Domain.Entities;
+using SSFinapp.UI.Helpers;
 
 namespace SSFinapp.UI.Forms;
 
 /// <summary>
 /// Ürün ekleme/düzenleme formu
 /// </summary>
-public partial class ProductEditForm : Form
+public partial class ProductEditForm : MaterialForm
 {
     private readonly IStockService _stockService;
     private int? _productId;
@@ -16,6 +18,16 @@ public partial class ProductEditForm : Form
         _stockService = stockService;
         InitializeComponent();
         InitializeBirimComboBox();
+        SetupKeyboardShortcuts();
+    }
+    
+    private void SetupKeyboardShortcuts()
+    {
+        KeyboardHelper.SetupKeyboardShortcuts(
+            this,
+            onEnter: () => btnSave_Click(btnSave, EventArgs.Empty), // ENTER: Kaydet
+            onEscape: () => btnCancel_Click(btnCancel, EventArgs.Empty) // ESC: İptal
+        );
     }
     
     private void InitializeBirimComboBox()

@@ -26,5 +26,8 @@ public interface IStockService
     // Stock level calculations
     Task<decimal> GetCurrentStockLevelAsync(int productId);
     Task<Dictionary<int, decimal>> GetAllStockLevelsAsync();
+    
+    // Dashboard statistics
+    Task<int> GetCriticalStockCountAsync(decimal threshold = 10);
 }
 

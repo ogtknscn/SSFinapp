@@ -1,3 +1,5 @@
+using MaterialSkin;
+using MaterialSkin.Controls;
 using SSFinapp.Business.Services;
 using SSFinapp.UI.Forms;
 
@@ -6,15 +8,17 @@ namespace SSFinapp.UI;
 /// <summary>
 /// Ana form - Dashboard
 /// </summary>
-public partial class MainForm : Form
+public partial class MainForm : MaterialForm
 {
     private readonly IStockService _stockService;
     private readonly ICurrentAccountService _currentAccountService;
+    private readonly ICashService _cashService;
     
-    public MainForm(IStockService stockService, ICurrentAccountService currentAccountService)
+    public MainForm(IStockService stockService, ICurrentAccountService currentAccountService, ICashService cashService)
     {
         _stockService = stockService;
         _currentAccountService = currentAccountService;
+        _cashService = cashService;
         InitializeComponent();
         LoadDashboard();
     }
@@ -29,6 +33,21 @@ public partial class MainForm : Form
             
             lblProductCount.Text = $"Toplam Ürün: {productCount}";
             lblCustomerCount.Text = $"Toplam Müşteri: {customerCount}";
+            
+            // Widget verilerini yükle
+            var totalCollections = await _currentAccountService.GetTotalCollectionsThisMonthAsync();
+            var overdueCount = await _currentAccountService.GetOverdueReceivablesCountAsync();
+            var totalOverdue = await _currentAccountService.GetTotalOverdueReceivablesAsync();
+            var criticalStockCount = await _stockService.GetCriticalStockCountAsync(10);
+            
+            lblWidgetCollections.Text = totalCollections.ToString("N2") + " ₺";
+            lblWidgetOverdue.Text = $"{overdueCount} Müşteri\n{totalOverdue:N2} ₺";
+            lblWidgetCriticalStock.Text = criticalStockCount.ToString() + " Ürün";
+            
+            // Kasa bakiyelerini yükle
+            var cashBalances = await _cashService.GetAllCashAccountBalancesAsync();
+            var totalCash = cashBalances.Values.Sum();
+            lblWidgetCash.Text = totalCash.ToString("N2") + " ₺";
         }
         catch (Exception ex)
         {
@@ -60,6 +79,19 @@ public partial class MainForm : Form
     private void btnCustomers_Click(object sender, EventArgs e)
     {
         var form = Program.GetService<CustomerManagementForm>();
+        form?.ShowDialog();
+        LoadDashboard();
+    }
+    
+    private void btnSettings_Click(object sender, EventArgs e)
+    {
+        var form = Program.GetService<SettingsForm>();
+        form?.ShowDialog();
+    }
+    
+    private void btnCashManagement_Click(object sender, EventArgs e)
+    {
+        var form = Program.GetService<CashManagementForm>();
         form?.ShowDialog();
         LoadDashboard();
     }

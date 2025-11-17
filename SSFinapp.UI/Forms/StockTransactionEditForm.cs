@@ -1,13 +1,15 @@
+using MaterialSkin.Controls;
 using SSFinapp.Business.Services;
 using SSFinapp.Domain.Entities;
 using SSFinapp.Domain.Enums;
+using SSFinapp.UI.Helpers;
 
 namespace SSFinapp.UI.Forms;
 
 /// <summary>
 /// Stok işlemi ekleme/düzenleme formu
 /// </summary>
-public partial class StockTransactionEditForm : Form
+public partial class StockTransactionEditForm : MaterialForm
 {
     private readonly IStockService _stockService;
     private int? _transactionId;
@@ -17,6 +19,56 @@ public partial class StockTransactionEditForm : Form
         _stockService = stockService;
         InitializeComponent();
         LoadProducts();
+        SetupKeyboardShortcuts();
+        SetupQuickAddButton();
+    }
+    
+    private void SetupQuickAddButton()
+    {
+        btnQuickAddProduct.Click += async (s, e) =>
+        {
+            try
+            {
+                var quickAddForm = Program.GetService<ProductEditForm>();
+                if (quickAddForm != null)
+                {
+                    if (quickAddForm.ShowDialog() == DialogResult.OK)
+                    {
+                        // Ürün listesini yenile
+                        LoadProducts();
+                        // Yeni eklenen ürünü seç
+                        var products = await _stockService.GetActiveProductsAsync();
+                        var lastProduct = products.OrderByDescending(p => p.Id).FirstOrDefault();
+                        if (lastProduct != null)
+                        {
+                            for (int i = 0; i < cmbProduct.Items.Count; i++)
+                            {
+                                var item = (ComboBoxItem)cmbProduct.Items[i];
+                                if (item.Value == lastProduct.Id)
+                                {
+                                    cmbProduct.SelectedIndex = i;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Hızlı ekleme sırasında hata: {ex.Message}", "Hata",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        };
+    }
+    
+    private void SetupKeyboardShortcuts()
+    {
+        KeyboardHelper.SetupKeyboardShortcuts(
+            this,
+            onEnter: () => btnSave_Click(btnSave, EventArgs.Empty), // ENTER: Kaydet
+            onEscape: () => btnCancel_Click(btnCancel, EventArgs.Empty) // ESC: İptal
+        );
     }
     
     private async void LoadProducts()

@@ -139,5 +139,31 @@ public class CurrentAccountService : ICurrentAccountService
         
         return balances;
     }
+    
+    // Dashboard statistics
+    public async Task<decimal> GetTotalCollectionsThisMonthAsync()
+    {
+        var startOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+        var endOfMonth = startOfMonth.AddMonths(1).AddDays(-1);
+        
+        var transactions = await _currentAccountTransactionRepository.GetAllAsync();
+        return transactions
+            .Where(t => t.Tarih >= startOfMonth && t.Tarih <= endOfMonth && t.Alinan > 0)
+            .Sum(t => t.Alinan);
+    }
+    
+    public async Task<int> GetOverdueReceivablesCountAsync()
+    {
+        var balances = await GetAllCustomerBalancesAsync();
+        // Bakiye > 0 olan müşteriler (bizim alacaklarımız)
+        return balances.Count(b => b.Value > 0);
+    }
+    
+    public async Task<decimal> GetTotalOverdueReceivablesAsync()
+    {
+        var balances = await GetAllCustomerBalancesAsync();
+        // Toplam alacaklarımız
+        return balances.Where(b => b.Value > 0).Sum(b => b.Value);
+    }
 }
 

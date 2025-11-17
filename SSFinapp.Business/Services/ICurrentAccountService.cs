@@ -25,5 +25,10 @@ public interface ICurrentAccountService
     // Balance calculations
     Task<decimal> GetCustomerBalanceAsync(int customerId);
     Task<Dictionary<int, decimal>> GetAllCustomerBalancesAsync();
+    
+    // Dashboard statistics
+    Task<decimal> GetTotalCollectionsThisMonthAsync();
+    Task<int> GetOverdueReceivablesCountAsync();
+    Task<decimal> GetTotalOverdueReceivablesAsync();
 }
 

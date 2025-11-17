@@ -3,13 +3,13 @@ using MaterialSkin.Controls;
 
 namespace SSFinapp.UI.Forms;
 
-partial class CurrentAccountForm
+partial class CashManagementForm
 {
     private System.ComponentModel.IContainer components = null;
     private DataGridView dgvTransactions;
     private MaterialButton btnAdd, btnEdit, btnDelete, btnRefresh, btnClose;
-    private MaterialComboBox cmbCustomerFilter, cmbTypeFilter;
-    private MaterialLabel lblCustomerFilter, lblTypeFilter, lblTitle, lblTotalCount;
+    private MaterialComboBox cmbCashAccountFilter, cmbTypeFilter;
+    private MaterialLabel lblCashAccountFilter, lblTypeFilter, lblTitle, lblTotalCount;
     private Panel panelTop, panelBottom;
     
     protected override void Dispose(bool disposing)
@@ -26,9 +26,9 @@ partial class CurrentAccountForm
         this.btnDelete = new MaterialButton();
         this.btnRefresh = new MaterialButton();
         this.btnClose = new MaterialButton();
-        this.cmbCustomerFilter = new MaterialComboBox();
+        this.cmbCashAccountFilter = new MaterialComboBox();
         this.cmbTypeFilter = new MaterialComboBox();
-        this.lblCustomerFilter = new MaterialLabel();
+        this.lblCashAccountFilter = new MaterialLabel();
         this.lblTypeFilter = new MaterialLabel();
         this.lblTitle = new MaterialLabel();
         this.lblTotalCount = new MaterialLabel();
@@ -43,7 +43,7 @@ partial class CurrentAccountForm
         // panelTop
         this.panelTop.BackColor = Color.FromArgb(52, 73, 94);
         this.panelTop.Controls.AddRange(new Control[] {
-            this.lblTitle, this.lblCustomerFilter, this.cmbCustomerFilter,
+            this.lblTitle, this.lblCashAccountFilter, this.cmbCashAccountFilter,
             this.lblTypeFilter, this.cmbTypeFilter
         });
         this.panelTop.Dock = DockStyle.Top;
@@ -57,38 +57,38 @@ partial class CurrentAccountForm
         this.lblTitle.ForeColor = Color.White;
         this.lblTitle.Location = new Point(20, 25);
         this.lblTitle.MouseState = MaterialSkin.MouseState.HOVER;
-        this.lblTitle.Text = "Cari Hesap İşlemleri";
+        this.lblTitle.Text = "Kasa İşlemleri";
         
-        // lblCustomerFilter
-        this.lblCustomerFilter.AutoSize = true;
-        this.lblCustomerFilter.Depth = 0;
-        this.lblCustomerFilter.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-        this.lblCustomerFilter.FontType = MaterialSkinManager.fontType.Body1;
-        this.lblCustomerFilter.ForeColor = Color.White;
-        this.lblCustomerFilter.Location = new Point(450, 30);
-        this.lblCustomerFilter.MouseState = MaterialSkin.MouseState.HOVER;
-        this.lblCustomerFilter.Text = "Müşteri:";
+        // lblCashAccountFilter
+        this.lblCashAccountFilter.AutoSize = true;
+        this.lblCashAccountFilter.Depth = 0;
+        this.lblCashAccountFilter.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+        this.lblCashAccountFilter.FontType = MaterialSkinManager.fontType.Body1;
+        this.lblCashAccountFilter.ForeColor = Color.White;
+        this.lblCashAccountFilter.Location = new Point(450, 30);
+        this.lblCashAccountFilter.MouseState = MaterialSkin.MouseState.HOVER;
+        this.lblCashAccountFilter.Text = "Kasa:";
         
-        // cmbCustomerFilter
-        this.cmbCustomerFilter.AutoResize = false;
-        this.cmbCustomerFilter.BackColor = Color.FromArgb(255, 255, 255);
-        this.cmbCustomerFilter.Depth = 0;
-        this.cmbCustomerFilter.DrawMode = DrawMode.OwnerDrawVariable;
-        this.cmbCustomerFilter.DropDownHeight = 174;
-        this.cmbCustomerFilter.DropDownStyle = ComboBoxStyle.DropDownList;
-        this.cmbCustomerFilter.DropDownWidth = 121;
-        this.cmbCustomerFilter.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-        this.cmbCustomerFilter.ForeColor = Color.FromArgb(222, 0, 0, 0);
-        this.cmbCustomerFilter.FormattingEnabled = true;
-        this.cmbCustomerFilter.Hint = "";
-        this.cmbCustomerFilter.IntegralHeight = false;
-        this.cmbCustomerFilter.ItemHeight = 43;
-        this.cmbCustomerFilter.Location = new Point(520, 27);
-        this.cmbCustomerFilter.MaxDropDownItems = 4;
-        this.cmbCustomerFilter.MouseState = MaterialSkin.MouseState.OUT;
-        this.cmbCustomerFilter.Size = new Size(280, 49);
-        this.cmbCustomerFilter.StartIndex = 0;
-        this.cmbCustomerFilter.SelectedIndexChanged += cmbCustomerFilter_SelectedIndexChanged;
+        // cmbCashAccountFilter
+        this.cmbCashAccountFilter.AutoResize = false;
+        this.cmbCashAccountFilter.BackColor = Color.FromArgb(255, 255, 255);
+        this.cmbCashAccountFilter.Depth = 0;
+        this.cmbCashAccountFilter.DrawMode = DrawMode.OwnerDrawVariable;
+        this.cmbCashAccountFilter.DropDownHeight = 174;
+        this.cmbCashAccountFilter.DropDownStyle = ComboBoxStyle.DropDownList;
+        this.cmbCashAccountFilter.DropDownWidth = 121;
+        this.cmbCashAccountFilter.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+        this.cmbCashAccountFilter.ForeColor = Color.FromArgb(222, 0, 0, 0);
+        this.cmbCashAccountFilter.FormattingEnabled = true;
+        this.cmbCashAccountFilter.Hint = "";
+        this.cmbCashAccountFilter.IntegralHeight = false;
+        this.cmbCashAccountFilter.ItemHeight = 43;
+        this.cmbCashAccountFilter.Location = new Point(520, 27);
+        this.cmbCashAccountFilter.MaxDropDownItems = 4;
+        this.cmbCashAccountFilter.MouseState = MaterialSkin.MouseState.OUT;
+        this.cmbCashAccountFilter.Size = new Size(280, 49);
+        this.cmbCashAccountFilter.StartIndex = 0;
+        this.cmbCashAccountFilter.SelectedIndexChanged += cmbCashAccountFilter_SelectedIndexChanged;
         
         // lblTypeFilter
         this.lblTypeFilter.AutoSize = true;
@@ -114,7 +114,7 @@ partial class CurrentAccountForm
         this.cmbTypeFilter.Hint = "";
         this.cmbTypeFilter.IntegralHeight = false;
         this.cmbTypeFilter.ItemHeight = 43;
-        this.cmbTypeFilter.Items.AddRange(new object[] { "Tümü", "Para", "Mal" });
+        this.cmbTypeFilter.Items.AddRange(new object[] { "Tümü", "Giriş", "Çıkış", "Transfer" });
         this.cmbTypeFilter.Location = new Point(865, 27);
         this.cmbTypeFilter.MaxDropDownItems = 4;
         this.cmbTypeFilter.MouseState = MaterialSkin.MouseState.OUT;
@@ -238,13 +238,13 @@ partial class CurrentAccountForm
         this.btnClose.UseVisualStyleBackColor = true;
         this.btnClose.Click += btnClose_Click;
         
-        // CurrentAccountForm
+        // CashManagementForm
         this.ClientSize = new Size(1200, 580);
         this.Controls.Add(this.dgvTransactions);
         this.Controls.Add(this.panelBottom);
         this.Controls.Add(this.panelTop);
         this.StartPosition = FormStartPosition.CenterScreen;
-        this.Text = "Cari Hesap İşlemleri";
+        this.Text = "Kasa İşlemleri";
         
         // MaterialSkin Manager
         var materialSkinManager = MaterialSkinManager.Instance;
@@ -260,3 +260,4 @@ partial class CurrentAccountForm
         this.ResumeLayout(false);
     }
 }
+

@@ -1,9 +1,12 @@
+using MaterialSkin;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SSFinapp.Business.Services;
 using SSFinapp.Data;
 using SSFinapp.Data.Repositories;
 using SSFinapp.UI.Forms;
+using SSFinapp.UI.Helpers;
+using System.Windows.Forms;
 
 namespace SSFinapp.UI;
 
@@ -21,21 +24,33 @@ static class Program
     [STAThread]
     static void Main()
     {
-        ApplicationConfiguration.Initialize();
-        
-        // Dependency Injection yapılandırması
-        var services = new ServiceCollection();
-        ConfigureServices(services);
-        ServiceProvider = services.BuildServiceProvider();
-        
-        // Veritabanını oluştur/güncelle
-        using (var scope = ServiceProvider.CreateScope())
+        try
         {
-            var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-            context.Database.Migrate();
+            ApplicationConfiguration.Initialize();
+            
+            // Dependency Injection yapılandırması
+            var services = new ServiceCollection();
+            ConfigureServices(services);
+            ServiceProvider = services.BuildServiceProvider();
+            
+            // Veritabanını oluştur/güncelle
+            using (var scope = ServiceProvider.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                context.Database.Migrate();
+            }
+            
+            // Tema ayarını yükle ve uygula
+            var theme = ThemeHelper.LoadTheme();
+            ThemeHelper.ApplyThemeToAllForms(theme);
+            
+            Application.Run(ServiceProvider.GetRequiredService<MainForm>());
         }
-        
-        Application.Run(ServiceProvider.GetRequiredService<MainForm>());
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Uygulama başlatılırken hata oluştu:\n\n{ex.Message}\n\nDetay:\n{ex.StackTrace}", 
+                "Kritik Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
     }
     
     private static void ConfigureServices(ServiceCollection services)
@@ -49,6 +64,8 @@ static class Program
         services.AddScoped<IStockTransactionRepository, StockTransactionRepository>();
         services.AddScoped<ICustomerRepository, CustomerRepository>();
         services.AddScoped<ICurrentAccountTransactionRepository, CurrentAccountTransactionRepository>();
+        services.AddScoped<ICashAccountRepository, CashAccountRepository>();
+        services.AddScoped<ICashTransactionRepository, CashTransactionRepository>();
         
         // Unit of Work
         services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -56,6 +73,7 @@ static class Program
         // Services
         services.AddScoped<IStockService, StockService>();
         services.AddScoped<ICurrentAccountService, CurrentAccountService>();
+        services.AddScoped<ICashService, CashService>();
         services.AddScoped<IExportService, ExportService>();
         services.AddScoped<IBackupService, BackupService>();
         
@@ -69,5 +87,8 @@ static class Program
         services.AddTransient<CustomerEditForm>();
         services.AddTransient<CurrentAccountForm>();
         services.AddTransient<CurrentAccountTransactionEditForm>();
+        services.AddTransient<CashManagementForm>();
+        services.AddTransient<CashTransactionEditForm>();
+        services.AddTransient<SettingsForm>();
     }
 }

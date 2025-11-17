@@ -11,6 +11,8 @@ public interface IUnitOfWork : IDisposable
     IStockTransactionRepository StockTransactions { get; }
     ICustomerRepository Customers { get; }
     ICurrentAccountTransactionRepository CurrentAccountTransactions { get; }
+    ICashAccountRepository CashAccounts { get; }
+    ICashTransactionRepository CashTransactions { get; }
     
     Task<int> SaveChangesAsync();
     Task BeginTransactionAsync();

@@ -1,20 +1,22 @@
+using MaterialSkin.Controls;
+
 namespace SSFinapp.UI.Forms;
 
 partial class ProductManagementForm
 {
     private System.ComponentModel.IContainer components = null;
     private DataGridView dgvProducts;
-    private Button btnAdd;
-    private Button btnEdit;
-    private Button btnDelete;
-    private Button btnRefresh;
-    private Button btnClose;
-    private Button btnViewStock;
-    private Button btnExport;
-    private TextBox txtSearch;
-    private Label lblSearch;
-    private Label lblTitle;
-    private Label lblTotalCount;
+    private MaterialButton btnAdd;
+    private MaterialButton btnEdit;
+    private MaterialButton btnDelete;
+    private MaterialButton btnRefresh;
+    private MaterialButton btnClose;
+    private MaterialButton btnViewStock;
+    private MaterialButton btnExport;
+    private MaterialTextBox txtSearch;
+    private MaterialLabel lblSearch;
+    private MaterialLabel lblTitle;
+    private MaterialLabel lblTotalCount;
     private Panel panelTop;
     private Panel panelBottom;
     
@@ -30,17 +32,17 @@ partial class ProductManagementForm
     private void InitializeComponent()
     {
         this.dgvProducts = new DataGridView();
-        this.btnAdd = new Button();
-        this.btnEdit = new Button();
-        this.btnDelete = new Button();
-        this.btnRefresh = new Button();
-        this.btnExport = new Button();
-        this.btnClose = new Button();
-        this.btnViewStock = new Button();
-        this.txtSearch = new TextBox();
-        this.lblSearch = new Label();
-        this.lblTitle = new Label();
-        this.lblTotalCount = new Label();
+        this.btnAdd = new MaterialButton();
+        this.btnEdit = new MaterialButton();
+        this.btnDelete = new MaterialButton();
+        this.btnRefresh = new MaterialButton();
+        this.btnExport = new MaterialButton();
+        this.btnClose = new MaterialButton();
+        this.btnViewStock = new MaterialButton();
+        this.txtSearch = new MaterialTextBox();
+        this.lblSearch = new MaterialLabel();
+        this.lblTitle = new MaterialLabel();
+        this.lblTotalCount = new MaterialLabel();
         this.panelTop = new Panel();
         this.panelBottom = new Panel();
         
@@ -62,30 +64,47 @@ partial class ProductManagementForm
         
         // lblTitle
         this.lblTitle.AutoSize = true;
-        this.lblTitle.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+        this.lblTitle.Depth = 0;
+        this.lblTitle.Font = new Font("Roboto", 14F, FontStyle.Bold, GraphicsUnit.Pixel);
+        this.lblTitle.FontType = MaterialSkin.MaterialSkinManager.fontType.H6;
         this.lblTitle.ForeColor = Color.White;
         this.lblTitle.Location = new Point(20, 15);
+        this.lblTitle.MouseState = MaterialSkin.MouseState.HOVER;
         this.lblTitle.Name = "lblTitle";
-        this.lblTitle.Size = new Size(180, 30);
+        this.lblTitle.Size = new Size(130, 19);
         this.lblTitle.TabIndex = 0;
         this.lblTitle.Text = "Ürün Yönetimi";
         
         // lblSearch
         this.lblSearch.AutoSize = true;
-        this.lblSearch.Font = new Font("Segoe UI", 10F);
+        this.lblSearch.Depth = 0;
+        this.lblSearch.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+        this.lblSearch.FontType = MaterialSkin.MaterialSkinManager.fontType.Body1;
         this.lblSearch.ForeColor = Color.White;
         this.lblSearch.Location = new Point(600, 25);
+        this.lblSearch.MouseState = MaterialSkin.MouseState.HOVER;
         this.lblSearch.Name = "lblSearch";
-        this.lblSearch.Size = new Size(40, 19);
+        this.lblSearch.Size = new Size(30, 19);
         this.lblSearch.TabIndex = 1;
         this.lblSearch.Text = "Ara:";
         
         // txtSearch
-        this.txtSearch.Font = new Font("Segoe UI", 10F);
-        this.txtSearch.Location = new Point(650, 22);
+        this.txtSearch.AnimateReadOnly = false;
+        this.txtSearch.BorderStyle = BorderStyle.None;
+        this.txtSearch.Depth = 0;
+        this.txtSearch.Font = new Font("Roboto", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
+        this.txtSearch.Hint = "Ürün adı veya birim ile ara...";
+        this.txtSearch.LeadingIcon = null;
+        this.txtSearch.Location = new Point(650, 20);
+        this.txtSearch.MaxLength = 32767;
+        this.txtSearch.MouseState = MaterialSkin.MouseState.OUT;
+        this.txtSearch.Multiline = false;
         this.txtSearch.Name = "txtSearch";
-        this.txtSearch.Size = new Size(300, 25);
+        this.txtSearch.Size = new Size(300, 50);
         this.txtSearch.TabIndex = 2;
+        this.txtSearch.Text = "";
+        this.txtSearch.TrailingIcon = null;
+        this.txtSearch.UseAccent = false;
         this.txtSearch.TextChanged += new EventHandler(this.txtSearch_TextChanged);
         
         // dgvProducts
@@ -123,102 +142,154 @@ partial class ProductManagementForm
         
         // lblTotalCount
         this.lblTotalCount.AutoSize = true;
-        this.lblTotalCount.Font = new Font("Segoe UI", 10F);
+        this.lblTotalCount.Depth = 0;
+        this.lblTotalCount.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+        this.lblTotalCount.FontType = MaterialSkin.MaterialSkinManager.fontType.Body1;
         this.lblTotalCount.Location = new Point(20, 30);
+        this.lblTotalCount.MouseState = MaterialSkin.MouseState.HOVER;
         this.lblTotalCount.Name = "lblTotalCount";
         this.lblTotalCount.Size = new Size(100, 19);
         this.lblTotalCount.TabIndex = 0;
         this.lblTotalCount.Text = "Toplam: 0 ürün";
         
         // btnAdd
-        this.btnAdd.BackColor = Color.FromArgb(46, 204, 113);
-        this.btnAdd.FlatStyle = FlatStyle.Flat;
-        this.btnAdd.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-        this.btnAdd.ForeColor = Color.White;
+        this.btnAdd.AutoSize = false;
+        this.btnAdd.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        this.btnAdd.Density = MaterialButton.MaterialButtonDensity.Default;
+        this.btnAdd.Depth = 0;
+        this.btnAdd.HighEmphasis = true;
+        this.btnAdd.Icon = null;
         this.btnAdd.Location = new Point(390, 20);
+        this.btnAdd.Margin = new Padding(4, 6, 4, 6);
+        this.btnAdd.MouseState = MaterialSkin.MouseState.HOVER;
         this.btnAdd.Name = "btnAdd";
+        this.btnAdd.NoAccentTextColor = Color.Empty;
         this.btnAdd.Size = new Size(100, 40);
         this.btnAdd.TabIndex = 1;
         this.btnAdd.Text = "➕ Ekle";
-        this.btnAdd.UseVisualStyleBackColor = false;
+        this.btnAdd.Type = MaterialButton.MaterialButtonType.Contained;
+        this.btnAdd.UseAccentColor = false;
+        this.btnAdd.UseVisualStyleBackColor = true;
         this.btnAdd.Click += new EventHandler(this.btnAdd_Click);
         
         // btnEdit
-        this.btnEdit.BackColor = Color.FromArgb(52, 152, 219);
-        this.btnEdit.FlatStyle = FlatStyle.Flat;
-        this.btnEdit.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-        this.btnEdit.ForeColor = Color.White;
+        this.btnEdit.AutoSize = false;
+        this.btnEdit.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        this.btnEdit.Density = MaterialButton.MaterialButtonDensity.Default;
+        this.btnEdit.Depth = 0;
+        this.btnEdit.HighEmphasis = true;
+        this.btnEdit.Icon = null;
         this.btnEdit.Location = new Point(500, 20);
+        this.btnEdit.Margin = new Padding(4, 6, 4, 6);
+        this.btnEdit.MouseState = MaterialSkin.MouseState.HOVER;
         this.btnEdit.Name = "btnEdit";
+        this.btnEdit.NoAccentTextColor = Color.Empty;
         this.btnEdit.Size = new Size(100, 40);
         this.btnEdit.TabIndex = 2;
         this.btnEdit.Text = "✏️ Düzenle";
-        this.btnEdit.UseVisualStyleBackColor = false;
+        this.btnEdit.Type = MaterialButton.MaterialButtonType.Contained;
+        this.btnEdit.UseAccentColor = false;
+        this.btnEdit.UseVisualStyleBackColor = true;
         this.btnEdit.Click += new EventHandler(this.btnEdit_Click);
         
         // btnDelete
-        this.btnDelete.BackColor = Color.FromArgb(231, 76, 60);
-        this.btnDelete.FlatStyle = FlatStyle.Flat;
-        this.btnDelete.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-        this.btnDelete.ForeColor = Color.White;
+        this.btnDelete.AutoSize = false;
+        this.btnDelete.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        this.btnDelete.Density = MaterialButton.MaterialButtonDensity.Default;
+        this.btnDelete.Depth = 0;
+        this.btnDelete.HighEmphasis = true;
+        this.btnDelete.Icon = null;
         this.btnDelete.Location = new Point(610, 20);
+        this.btnDelete.Margin = new Padding(4, 6, 4, 6);
+        this.btnDelete.MouseState = MaterialSkin.MouseState.HOVER;
         this.btnDelete.Name = "btnDelete";
+        this.btnDelete.NoAccentTextColor = Color.Empty;
         this.btnDelete.Size = new Size(100, 40);
         this.btnDelete.TabIndex = 3;
         this.btnDelete.Text = "🗑️ Sil";
-        this.btnDelete.UseVisualStyleBackColor = false;
+        this.btnDelete.Type = MaterialButton.MaterialButtonType.Contained;
+        this.btnDelete.UseAccentColor = true;
+        this.btnDelete.UseVisualStyleBackColor = true;
         this.btnDelete.Click += new EventHandler(this.btnDelete_Click);
         
         // btnViewStock
-        this.btnViewStock.BackColor = Color.FromArgb(155, 89, 182);
-        this.btnViewStock.FlatStyle = FlatStyle.Flat;
-        this.btnViewStock.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-        this.btnViewStock.ForeColor = Color.White;
-        this.btnViewStock.Location = new Point(580, 20);
+        this.btnViewStock.AutoSize = false;
+        this.btnViewStock.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        this.btnViewStock.Density = MaterialButton.MaterialButtonDensity.Default;
+        this.btnViewStock.Depth = 0;
+        this.btnViewStock.HighEmphasis = false;
+        this.btnViewStock.Icon = null;
+        this.btnViewStock.Location = new Point(250, 20);
+        this.btnViewStock.Margin = new Padding(4, 6, 4, 6);
+        this.btnViewStock.MouseState = MaterialSkin.MouseState.HOVER;
         this.btnViewStock.Name = "btnViewStock";
+        this.btnViewStock.NoAccentTextColor = Color.Empty;
         this.btnViewStock.Size = new Size(120, 40);
         this.btnViewStock.TabIndex = 4;
         this.btnViewStock.Text = "📦 Stok Bilgisi";
-        this.btnViewStock.UseVisualStyleBackColor = false;
+        this.btnViewStock.Type = MaterialButton.MaterialButtonType.Outlined;
+        this.btnViewStock.UseAccentColor = false;
+        this.btnViewStock.UseVisualStyleBackColor = true;
         this.btnViewStock.Click += new EventHandler(this.btnViewStock_Click);
         
         // btnRefresh
-        this.btnRefresh.BackColor = Color.FromArgb(149, 165, 166);
-        this.btnRefresh.FlatStyle = FlatStyle.Flat;
-        this.btnRefresh.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-        this.btnRefresh.ForeColor = Color.White;
-        this.btnRefresh.Location = new Point(710, 20);
+        this.btnRefresh.AutoSize = false;
+        this.btnRefresh.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        this.btnRefresh.Density = MaterialButton.MaterialButtonDensity.Default;
+        this.btnRefresh.Depth = 0;
+        this.btnRefresh.HighEmphasis = false;
+        this.btnRefresh.Icon = null;
+        this.btnRefresh.Location = new Point(720, 20);
+        this.btnRefresh.Margin = new Padding(4, 6, 4, 6);
+        this.btnRefresh.MouseState = MaterialSkin.MouseState.HOVER;
         this.btnRefresh.Name = "btnRefresh";
+        this.btnRefresh.NoAccentTextColor = Color.Empty;
         this.btnRefresh.Size = new Size(100, 40);
         this.btnRefresh.TabIndex = 5;
         this.btnRefresh.Text = "🔄 Yenile";
-        this.btnRefresh.UseVisualStyleBackColor = false;
+        this.btnRefresh.Type = MaterialButton.MaterialButtonType.Text;
+        this.btnRefresh.UseAccentColor = false;
+        this.btnRefresh.UseVisualStyleBackColor = true;
         this.btnRefresh.Click += new EventHandler(this.btnRefresh_Click);
         
         // btnExport
-        this.btnExport.BackColor = Color.FromArgb(39, 174, 96);
-        this.btnExport.FlatStyle = FlatStyle.Flat;
-        this.btnExport.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-        this.btnExport.ForeColor = Color.White;
-        this.btnExport.Location = new Point(250, 20);
+        this.btnExport.AutoSize = false;
+        this.btnExport.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        this.btnExport.Density = MaterialButton.MaterialButtonDensity.Default;
+        this.btnExport.Depth = 0;
+        this.btnExport.HighEmphasis = false;
+        this.btnExport.Icon = null;
+        this.btnExport.Location = new Point(120, 20);
+        this.btnExport.Margin = new Padding(4, 6, 4, 6);
+        this.btnExport.MouseState = MaterialSkin.MouseState.HOVER;
         this.btnExport.Name = "btnExport";
-        this.btnExport.Size = new Size(130, 40);
+        this.btnExport.NoAccentTextColor = Color.Empty;
+        this.btnExport.Size = new Size(120, 40);
         this.btnExport.TabIndex = 7;
         this.btnExport.Text = "📊 Excel'e Aktar";
-        this.btnExport.UseVisualStyleBackColor = false;
+        this.btnExport.Type = MaterialButton.MaterialButtonType.Outlined;
+        this.btnExport.UseAccentColor = false;
+        this.btnExport.UseVisualStyleBackColor = true;
         this.btnExport.Click += new EventHandler(this.btnExport_Click);
         
         // btnClose
-        this.btnClose.BackColor = Color.FromArgb(127, 140, 141);
-        this.btnClose.FlatStyle = FlatStyle.Flat;
-        this.btnClose.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-        this.btnClose.ForeColor = Color.White;
+        this.btnClose.AutoSize = false;
+        this.btnClose.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        this.btnClose.Density = MaterialButton.MaterialButtonDensity.Default;
+        this.btnClose.Depth = 0;
+        this.btnClose.HighEmphasis = false;
+        this.btnClose.Icon = null;
         this.btnClose.Location = new Point(870, 20);
+        this.btnClose.Margin = new Padding(4, 6, 4, 6);
+        this.btnClose.MouseState = MaterialSkin.MouseState.HOVER;
         this.btnClose.Name = "btnClose";
+        this.btnClose.NoAccentTextColor = Color.Empty;
         this.btnClose.Size = new Size(100, 40);
         this.btnClose.TabIndex = 6;
         this.btnClose.Text = "❌ Kapat";
-        this.btnClose.UseVisualStyleBackColor = false;
+        this.btnClose.Type = MaterialButton.MaterialButtonType.Text;
+        this.btnClose.UseAccentColor = false;
+        this.btnClose.UseVisualStyleBackColor = true;
         this.btnClose.Click += new EventHandler(this.btnClose_Click);
         
         // ProductManagementForm
@@ -231,6 +302,13 @@ partial class ProductManagementForm
         this.Name = "ProductManagementForm";
         this.StartPosition = FormStartPosition.CenterScreen;
         this.Text = "Ürün Yönetimi";
+        
+        // MaterialSkin Manager
+        var materialSkinManager = MaterialSkin.MaterialSkinManager.Instance;
+        materialSkinManager.AddFormToManage(this);
+        materialSkinManager.Theme = MaterialSkin.MaterialSkinManager.Themes.LIGHT;
+        materialSkinManager.ColorScheme = new MaterialSkin.ColorScheme(MaterialSkin.Primary.Blue700, MaterialSkin.Primary.Blue900, MaterialSkin.Primary.Blue500, MaterialSkin.Accent.Blue200, MaterialSkin.TextShade.WHITE);
+        
         ((System.ComponentModel.ISupportInitialize)this.dgvProducts).EndInit();
         this.panelTop.ResumeLayout(false);
         this.panelTop.PerformLayout();

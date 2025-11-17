@@ -33,6 +33,16 @@ public class ApplicationDbContext : DbContext
     /// </summary>
     public DbSet<CurrentAccountTransaction> CurrentAccountTransactions { get; set; } = null!;
     
+    /// <summary>
+    /// Kasa hesapları tablosu
+    /// </summary>
+    public DbSet<CashAccount> CashAccounts { get; set; } = null!;
+    
+    /// <summary>
+    /// Kasa işlemleri tablosu
+    /// </summary>
+    public DbSet<CashTransaction> CashTransactions { get; set; } = null!;
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -91,6 +101,33 @@ public class ApplicationDbContext : DbContext
             entity.Property(e => e.Alinan).HasColumnType("decimal(18,2)").HasDefaultValue(0);
             entity.Property(e => e.Verilen).HasColumnType("decimal(18,2)").HasDefaultValue(0);
             entity.Property(e => e.IslemTipi).IsRequired();
+            entity.Property(e => e.Aciklama).HasMaxLength(500);
+            entity.Property(e => e.OlusturmaTarihi).HasDefaultValueSql("datetime('now')");
+        });
+        
+        // CashAccount configuration
+        modelBuilder.Entity<CashAccount>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Ad).IsRequired().HasMaxLength(200);
+            entity.Property(e => e.ParaBirimi).HasMaxLength(10).HasDefaultValue("TRY");
+            entity.Property(e => e.Aciklama).HasMaxLength(500);
+            entity.Property(e => e.Aktif).HasDefaultValue(true);
+            entity.Property(e => e.OlusturmaTarihi).HasDefaultValueSql("datetime('now')");
+            
+            entity.HasMany(e => e.Islemler)
+                  .WithOne(e => e.Kasa)
+                  .HasForeignKey(e => e.KasaId)
+                  .OnDelete(DeleteBehavior.Restrict);
+        });
+        
+        // CashTransaction configuration
+        modelBuilder.Entity<CashTransaction>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Tarih).IsRequired();
+            entity.Property(e => e.IslemTipi).IsRequired();
+            entity.Property(e => e.Tutar).HasColumnType("decimal(18,2)").IsRequired();
             entity.Property(e => e.Aciklama).HasMaxLength(500);
             entity.Property(e => e.OlusturmaTarihi).HasDefaultValueSql("datetime('now')");
         });

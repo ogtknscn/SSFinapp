@@ -1,9 +1,11 @@
+using MaterialSkin.Controls;
 using SSFinapp.Business.Services;
 using SSFinapp.Domain.Entities;
+using SSFinapp.UI.Helpers;
 
 namespace SSFinapp.UI.Forms;
 
-public partial class CustomerManagementForm : Form
+public partial class CustomerManagementForm : MaterialForm
 {
     private readonly ICurrentAccountService _currentAccountService;
     
@@ -12,6 +14,19 @@ public partial class CustomerManagementForm : Form
         _currentAccountService = currentAccountService;
         InitializeComponent();
         LoadCustomers();
+        SetupKeyboardShortcuts();
+    }
+    
+    private void SetupKeyboardShortcuts()
+    {
+        KeyboardHelper.SetupKeyboardShortcuts(
+            this,
+            onInsert: () => btnAdd_Click(btnAdd, EventArgs.Empty), // INS: Yeni müşteri ekle
+            onDelete: () => btnDelete_Click(btnDelete, EventArgs.Empty), // DEL: Seçili müşteriyi sil
+            onF5: () => btnRefresh_Click(btnRefresh, EventArgs.Empty), // F5: Yenile
+            onF3: () => txtSearch.Focus(), // F3: Arama kutusuna odaklan
+            onEscape: () => btnClose_Click(btnClose, EventArgs.Empty) // ESC: Kapat
+        );
     }
     
     private async void LoadCustomers()

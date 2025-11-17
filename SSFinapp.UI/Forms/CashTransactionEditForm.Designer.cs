@@ -3,16 +3,15 @@ using MaterialSkin.Controls;
 
 namespace SSFinapp.UI.Forms;
 
-partial class StockTransactionEditForm
+partial class CashTransactionEditForm
 {
     private System.ComponentModel.IContainer components = null;
-    private MaterialLabel lblTitle, lblTarih, lblProduct, lblMiktar, lblBirim, lblIslemTipi, lblAciklama;
+    private MaterialLabel lblTitle, lblTarih, lblCashAccount, lblTutar, lblIslemTipi, lblAciklama;
     private DateTimePicker dtpTarih;
-    private MaterialComboBox cmbProduct;
-    private MaterialButton btnQuickAddProduct;
-    private NumericUpDown numMiktar;
-    private RadioButton rdbGiris, rdbCikis;
-    private MaterialMultiLineTextBox txtAciklama;
+    private MaterialComboBox cmbCashAccount;
+    private MaterialTextBox txtAciklama;
+    private NumericUpDown numTutar;
+    private RadioButton rdbGiris, rdbCikis, rdbTransfer;
     private MaterialButton btnSave, btnCancel;
     private Panel panelTop, panelContent;
     private GroupBox grpIslemTipi;
@@ -30,23 +29,23 @@ partial class StockTransactionEditForm
         this.panelContent = new Panel();
         this.lblTarih = new MaterialLabel();
         this.dtpTarih = new DateTimePicker();
-        this.lblProduct = new MaterialLabel();
-        this.cmbProduct = new MaterialComboBox();
+        this.lblCashAccount = new MaterialLabel();
+        this.cmbCashAccount = new MaterialComboBox();
+        this.lblTutar = new MaterialLabel();
+        this.numTutar = new NumericUpDown();
         this.grpIslemTipi = new GroupBox();
         this.rdbGiris = new RadioButton();
         this.rdbCikis = new RadioButton();
-        this.lblMiktar = new MaterialLabel();
-        this.numMiktar = new NumericUpDown();
-        this.lblBirim = new MaterialLabel();
+        this.rdbTransfer = new RadioButton();
         this.lblAciklama = new MaterialLabel();
-        this.txtAciklama = new MaterialMultiLineTextBox();
+        this.txtAciklama = new MaterialTextBox();
         this.btnSave = new MaterialButton();
         this.btnCancel = new MaterialButton();
         
         this.panelTop.SuspendLayout();
         this.panelContent.SuspendLayout();
         this.grpIslemTipi.SuspendLayout();
-        ((System.ComponentModel.ISupportInitialize)this.numMiktar).BeginInit();
+        ((System.ComponentModel.ISupportInitialize)this.numTutar).BeginInit();
         this.SuspendLayout();
         
         // panelTop
@@ -63,7 +62,7 @@ partial class StockTransactionEditForm
         this.lblTitle.ForeColor = Color.White;
         this.lblTitle.Location = new Point(20, 18);
         this.lblTitle.MouseState = MaterialSkin.MouseState.HOVER;
-        this.lblTitle.Text = "Yeni Stok İşlemi";
+        this.lblTitle.Text = "Yeni Kasa İşlemi";
         
         // panelContent
         this.panelContent.BackColor = Color.White;
@@ -76,7 +75,7 @@ partial class StockTransactionEditForm
         this.lblTarih.Depth = 0;
         this.lblTarih.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
         this.lblTarih.FontType = MaterialSkinManager.fontType.Body1;
-        this.lblTarih.Location = new Point(30, 30);
+        this.lblTarih.Location = new Point(30, 20);
         this.lblTarih.MouseState = MaterialSkin.MouseState.HOVER;
         this.lblTarih.Text = "Tarih:";
         
@@ -84,127 +83,106 @@ partial class StockTransactionEditForm
         this.dtpTarih.Font = new Font("Segoe UI", 11F);
         this.dtpTarih.Format = DateTimePickerFormat.Custom;
         this.dtpTarih.CustomFormat = "dd.MM.yyyy HH:mm";
-        this.dtpTarih.Location = new Point(30, 55);
+        this.dtpTarih.Location = new Point(30, 45);
         this.dtpTarih.Size = new Size(200, 27);
         
-        // lblProduct
-        this.lblProduct.AutoSize = true;
-        this.lblProduct.Depth = 0;
-        this.lblProduct.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-        this.lblProduct.FontType = MaterialSkinManager.fontType.Body1;
-        this.lblProduct.Location = new Point(30, 95);
-        this.lblProduct.MouseState = MaterialSkin.MouseState.HOVER;
-        this.lblProduct.Text = "Ürün:";
+        // lblCashAccount
+        this.lblCashAccount.AutoSize = true;
+        this.lblCashAccount.Depth = 0;
+        this.lblCashAccount.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+        this.lblCashAccount.FontType = MaterialSkinManager.fontType.Body1;
+        this.lblCashAccount.Location = new Point(30, 85);
+        this.lblCashAccount.MouseState = MaterialSkin.MouseState.HOVER;
+        this.lblCashAccount.Text = "Kasa:";
         
-        // cmbProduct
-        this.cmbProduct.AutoResize = false;
-        this.cmbProduct.BackColor = Color.FromArgb(255, 255, 255);
-        this.cmbProduct.Depth = 0;
-        this.cmbProduct.DrawMode = DrawMode.OwnerDrawVariable;
-        this.cmbProduct.DropDownHeight = 174;
-        this.cmbProduct.DropDownStyle = ComboBoxStyle.DropDownList;
-        this.cmbProduct.DropDownWidth = 121;
-        this.cmbProduct.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-        this.cmbProduct.ForeColor = Color.FromArgb(222, 0, 0, 0);
-        this.cmbProduct.FormattingEnabled = true;
-        this.cmbProduct.Hint = "";
-        this.cmbProduct.IntegralHeight = false;
-        this.cmbProduct.ItemHeight = 43;
-        this.cmbProduct.Location = new Point(30, 120);
-        this.cmbProduct.MaxDropDownItems = 4;
-        this.cmbProduct.MouseState = MaterialSkin.MouseState.OUT;
-        this.cmbProduct.Size = new Size(450, 49);
-        this.cmbProduct.StartIndex = 0;
-        this.cmbProduct.SelectedIndexChanged += cmbProduct_SelectedIndexChanged;
+        // cmbCashAccount
+        this.cmbCashAccount.AutoResize = false;
+        this.cmbCashAccount.BackColor = Color.FromArgb(255, 255, 255);
+        this.cmbCashAccount.Depth = 0;
+        this.cmbCashAccount.DrawMode = DrawMode.OwnerDrawVariable;
+        this.cmbCashAccount.DropDownHeight = 174;
+        this.cmbCashAccount.DropDownStyle = ComboBoxStyle.DropDownList;
+        this.cmbCashAccount.DropDownWidth = 121;
+        this.cmbCashAccount.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+        this.cmbCashAccount.ForeColor = Color.FromArgb(222, 0, 0, 0);
+        this.cmbCashAccount.FormattingEnabled = true;
+        this.cmbCashAccount.Hint = "";
+        this.cmbCashAccount.IntegralHeight = false;
+        this.cmbCashAccount.ItemHeight = 43;
+        this.cmbCashAccount.Location = new Point(30, 110);
+        this.cmbCashAccount.MaxDropDownItems = 4;
+        this.cmbCashAccount.MouseState = MaterialSkin.MouseState.OUT;
+        this.cmbCashAccount.Size = new Size(500, 49);
+        this.cmbCashAccount.StartIndex = 0;
         
-        // btnQuickAddProduct
-        this.btnQuickAddProduct = new MaterialButton();
-        this.btnQuickAddProduct.AutoSize = false;
-        this.btnQuickAddProduct.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-        this.btnQuickAddProduct.Density = MaterialButton.MaterialButtonDensity.Default;
-        this.btnQuickAddProduct.Depth = 0;
-        this.btnQuickAddProduct.HighEmphasis = true;
-        this.btnQuickAddProduct.Icon = null;
-        this.btnQuickAddProduct.Location = new Point(490, 120);
-        this.btnQuickAddProduct.Margin = new Padding(4, 6, 4, 6);
-        this.btnQuickAddProduct.MouseState = MaterialSkin.MouseState.HOVER;
-        this.btnQuickAddProduct.Size = new Size(40, 49);
-        this.btnQuickAddProduct.Text = "+";
-        this.btnQuickAddProduct.Type = MaterialButton.MaterialButtonType.Contained;
-        this.btnQuickAddProduct.UseAccentColor = true;
-        this.btnQuickAddProduct.UseVisualStyleBackColor = true;
-        this.btnQuickAddProduct.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+        // lblTutar
+        this.lblTutar.AutoSize = true;
+        this.lblTutar.Depth = 0;
+        this.lblTutar.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+        this.lblTutar.FontType = MaterialSkinManager.fontType.Body1;
+        this.lblTutar.Location = new Point(30, 170);
+        this.lblTutar.MouseState = MaterialSkin.MouseState.HOVER;
+        this.lblTutar.Text = "Tutar:";
+        
+        // numTutar
+        this.numTutar.DecimalPlaces = 2;
+        this.numTutar.Font = new Font("Segoe UI", 11F);
+        this.numTutar.Location = new Point(30, 195);
+        this.numTutar.Maximum = 999999999;
+        this.numTutar.Size = new Size(200, 27);
         
         // grpIslemTipi
         this.grpIslemTipi.Font = new Font("Segoe UI", 10F);
-        this.grpIslemTipi.Location = new Point(30, 160);
-        this.grpIslemTipi.Size = new Size(250, 70);
+        this.grpIslemTipi.Location = new Point(30, 235);
+        this.grpIslemTipi.Size = new Size(500, 60);
         this.grpIslemTipi.Text = "İşlem Tipi";
-        this.grpIslemTipi.Controls.AddRange(new Control[] { this.rdbGiris, this.rdbCikis });
         
         // rdbGiris
         this.rdbGiris.AutoSize = true;
         this.rdbGiris.Checked = true;
         this.rdbGiris.Font = new Font("Segoe UI", 10F);
-        this.rdbGiris.Location = new Point(20, 30);
-        this.rdbGiris.Text = "📥 Giriş";
+        this.rdbGiris.Location = new Point(20, 25);
+        this.rdbGiris.Text = "💰 Giriş (Tahsilat)";
         this.rdbGiris.TabStop = true;
         
         // rdbCikis
         this.rdbCikis.AutoSize = true;
         this.rdbCikis.Font = new Font("Segoe UI", 10F);
-        this.rdbCikis.Location = new Point(130, 30);
-        this.rdbCikis.Text = "📤 Çıkış";
+        this.rdbCikis.Location = new Point(200, 25);
+        this.rdbCikis.Text = "💸 Çıkış (Ödeme)";
         
-        // lblMiktar
-        this.lblMiktar.AutoSize = true;
-        this.lblMiktar.Depth = 0;
-        this.lblMiktar.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-        this.lblMiktar.FontType = MaterialSkinManager.fontType.Body1;
-        this.lblMiktar.Location = new Point(300, 170);
-        this.lblMiktar.MouseState = MaterialSkin.MouseState.HOVER;
-        this.lblMiktar.Text = "Miktar:";
+        // rdbTransfer
+        this.rdbTransfer.AutoSize = true;
+        this.rdbTransfer.Font = new Font("Segoe UI", 10F);
+        this.rdbTransfer.Location = new Point(380, 25);
+        this.rdbTransfer.Text = "🔄 Transfer";
         
-        // numMiktar
-        this.numMiktar.DecimalPlaces = 2;
-        this.numMiktar.Font = new Font("Segoe UI", 11F);
-        this.numMiktar.Location = new Point(300, 195);
-        this.numMiktar.Maximum = 999999;
-        this.numMiktar.Size = new Size(150, 27);
-        
-        // lblBirim
-        this.lblBirim.AutoSize = true;
-        this.lblBirim.Depth = 0;
-        this.lblBirim.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-        this.lblBirim.FontType = MaterialSkinManager.fontType.Body1;
-        this.lblBirim.Location = new Point(465, 197);
-        this.lblBirim.MouseState = MaterialSkin.MouseState.HOVER;
-        this.lblBirim.Text = "Birim: -";
+        this.grpIslemTipi.Controls.AddRange(new Control[] { this.rdbGiris, this.rdbCikis, this.rdbTransfer });
         
         // lblAciklama
         this.lblAciklama.AutoSize = true;
         this.lblAciklama.Depth = 0;
         this.lblAciklama.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
         this.lblAciklama.FontType = MaterialSkinManager.fontType.Body1;
-        this.lblAciklama.Location = new Point(30, 245);
+        this.lblAciklama.Location = new Point(30, 310);
         this.lblAciklama.MouseState = MaterialSkin.MouseState.HOVER;
         this.lblAciklama.Text = "Açıklama:";
         
         // txtAciklama
-        this.txtAciklama.BackgroundImageLayout = ImageLayout.None;
+        this.txtAciklama.AnimateReadOnly = false;
+        this.txtAciklama.BorderStyle = BorderStyle.None;
         this.txtAciklama.Depth = 0;
-        this.txtAciklama.HideSelection = true;
-        this.txtAciklama.Location = new Point(30, 270);
+        this.txtAciklama.Font = new Font("Roboto", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
+        this.txtAciklama.Hint = "";
+        this.txtAciklama.LeadingIcon = null;
+        this.txtAciklama.Location = new Point(30, 335);
+        this.txtAciklama.MaxLength = 500;
         this.txtAciklama.MouseState = MaterialSkin.MouseState.OUT;
-        this.txtAciklama.Name = "txtAciklama";
-        this.txtAciklama.ScrollBars = RichTextBoxScrollBars.None;
-        this.txtAciklama.SelectedText = "";
-        this.txtAciklama.SelectionLength = 0;
-        this.txtAciklama.SelectionStart = 0;
-        this.txtAciklama.ShortcutsEnabled = true;
-        this.txtAciklama.Size = new Size(500, 60);
-        this.txtAciklama.TabIndex = 0;
+        this.txtAciklama.Multiline = false;
+        this.txtAciklama.Size = new Size(500, 50);
         this.txtAciklama.Text = "";
+        this.txtAciklama.TrailingIcon = null;
+        this.txtAciklama.UseAccent = false;
         
         // btnSave
         this.btnSave.AutoSize = false;
@@ -213,7 +191,7 @@ partial class StockTransactionEditForm
         this.btnSave.Depth = 0;
         this.btnSave.HighEmphasis = true;
         this.btnSave.Icon = null;
-        this.btnSave.Location = new Point(310, 350);
+        this.btnSave.Location = new Point(310, 410);
         this.btnSave.Margin = new Padding(4, 6, 4, 6);
         this.btnSave.MouseState = MaterialSkin.MouseState.HOVER;
         this.btnSave.Size = new Size(110, 40);
@@ -230,7 +208,7 @@ partial class StockTransactionEditForm
         this.btnCancel.Depth = 0;
         this.btnCancel.HighEmphasis = false;
         this.btnCancel.Icon = null;
-        this.btnCancel.Location = new Point(430, 350);
+        this.btnCancel.Location = new Point(430, 410);
         this.btnCancel.Margin = new Padding(4, 6, 4, 6);
         this.btnCancel.MouseState = MaterialSkin.MouseState.HOVER;
         this.btnCancel.Size = new Size(110, 40);
@@ -241,19 +219,19 @@ partial class StockTransactionEditForm
         this.btnCancel.Click += btnCancel_Click;
         
         this.panelContent.Controls.AddRange(new Control[] {
-            this.lblTarih, this.dtpTarih, this.lblProduct, this.cmbProduct, this.btnQuickAddProduct,
-            this.grpIslemTipi, this.lblMiktar, this.numMiktar, this.lblBirim, this.lblAciklama, 
-            this.txtAciklama, this.btnSave, this.btnCancel
+            this.lblTarih, this.dtpTarih, this.lblCashAccount, this.cmbCashAccount,
+            this.lblTutar, this.numTutar, this.grpIslemTipi, this.lblAciklama, this.txtAciklama,
+            this.btnSave, this.btnCancel
         });
         
         // Form
-        this.ClientSize = new Size(600, 450);
+        this.ClientSize = new Size(600, 510);
         this.Controls.Add(this.panelContent);
         this.Controls.Add(this.panelTop);
         this.FormBorderStyle = FormBorderStyle.FixedDialog;
         this.MaximizeBox = false;
         this.StartPosition = FormStartPosition.CenterParent;
-        this.Text = "Yeni Stok İşlemi";
+        this.Text = "Yeni Kasa İşlemi";
         
         // MaterialSkin Manager
         var materialSkinManager = MaterialSkinManager.Instance;
@@ -266,7 +244,7 @@ partial class StockTransactionEditForm
         this.panelContent.ResumeLayout(false);
         this.panelContent.PerformLayout();
         this.grpIslemTipi.ResumeLayout(false);
-        ((System.ComponentModel.ISupportInitialize)this.numMiktar).EndInit();
+        ((System.ComponentModel.ISupportInitialize)this.numTutar).EndInit();
         this.ResumeLayout(false);
     }
 }

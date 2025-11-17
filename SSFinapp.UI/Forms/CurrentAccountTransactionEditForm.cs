@@ -1,10 +1,12 @@
+using MaterialSkin.Controls;
 using SSFinapp.Business.Services;
 using SSFinapp.Domain.Entities;
 using SSFinapp.Domain.Enums;
+using SSFinapp.UI.Helpers;
 
 namespace SSFinapp.UI.Forms;
 
-public partial class CurrentAccountTransactionEditForm : Form
+public partial class CurrentAccountTransactionEditForm : MaterialForm
 {
     private readonly ICurrentAccountService _currentAccountService;
     private int? _transactionId;
@@ -14,6 +16,56 @@ public partial class CurrentAccountTransactionEditForm : Form
         _currentAccountService = currentAccountService;
         InitializeComponent();
         LoadCustomers();
+        SetupKeyboardShortcuts();
+        SetupQuickAddButton();
+    }
+    
+    private void SetupQuickAddButton()
+    {
+        btnQuickAddCustomer.Click += async (s, e) =>
+        {
+            try
+            {
+                var quickAddForm = Program.GetService<CustomerEditForm>();
+                if (quickAddForm != null)
+                {
+                    if (quickAddForm.ShowDialog() == DialogResult.OK)
+                    {
+                        // Müşteri listesini yenile
+                        LoadCustomers();
+                        // Yeni eklenen müşteriyi seç
+                        var customers = await _currentAccountService.GetActiveCustomersAsync();
+                        var lastCustomer = customers.OrderByDescending(c => c.Id).FirstOrDefault();
+                        if (lastCustomer != null)
+                        {
+                            for (int i = 0; i < cmbCustomer.Items.Count; i++)
+                            {
+                                var item = (ComboBoxItem)cmbCustomer.Items[i];
+                                if (item.Value == lastCustomer.Id)
+                                {
+                                    cmbCustomer.SelectedIndex = i;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Hızlı ekleme sırasında hata: {ex.Message}", "Hata",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        };
+    }
+    
+    private void SetupKeyboardShortcuts()
+    {
+        KeyboardHelper.SetupKeyboardShortcuts(
+            this,
+            onEnter: () => btnSave_Click(btnSave, EventArgs.Empty), // ENTER: Kaydet
+            onEscape: () => btnCancel_Click(btnCancel, EventArgs.Empty) // ESC: İptal
+        );
     }
     
     private async void LoadCustomers()

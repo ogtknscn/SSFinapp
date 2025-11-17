@@ -137,5 +137,13 @@ public class StockService : IStockService
         
         return stockLevels;
     }
+    
+    // Dashboard statistics
+    public async Task<int> GetCriticalStockCountAsync(decimal threshold = 10)
+    {
+        var stockLevels = await GetAllStockLevelsAsync();
+        // Stok seviyesi threshold'dan düşük veya negatif olan ürünler
+        return stockLevels.Count(sl => sl.Value <= threshold);
+    }
 }
 

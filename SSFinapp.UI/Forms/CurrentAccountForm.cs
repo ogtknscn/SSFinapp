@@ -1,10 +1,12 @@
+using MaterialSkin.Controls;
 using SSFinapp.Business.Services;
 using SSFinapp.Domain.Entities;
 using SSFinapp.Domain.Enums;
+using SSFinapp.UI.Helpers;
 
 namespace SSFinapp.UI.Forms;
 
-public partial class CurrentAccountForm : Form
+public partial class CurrentAccountForm : MaterialForm
 {
     private readonly ICurrentAccountService _currentAccountService;
     private List<CurrentAccountTransaction> _allTransactions = new();
@@ -14,6 +16,18 @@ public partial class CurrentAccountForm : Form
         _currentAccountService = currentAccountService;
         InitializeComponent();
         LoadData();
+        SetupKeyboardShortcuts();
+    }
+    
+    private void SetupKeyboardShortcuts()
+    {
+        KeyboardHelper.SetupKeyboardShortcuts(
+            this,
+            onInsert: () => btnAdd_Click(btnAdd, EventArgs.Empty), // INS: Yeni işlem ekle
+            onDelete: () => btnDelete_Click(btnDelete, EventArgs.Empty), // DEL: Seçili işlemi sil
+            onF5: () => btnRefresh_Click(btnRefresh, EventArgs.Empty), // F5: Yenile
+            onEscape: () => btnClose_Click(btnClose, EventArgs.Empty) // ESC: Kapat
+        );
     }
     
     private async void LoadData()

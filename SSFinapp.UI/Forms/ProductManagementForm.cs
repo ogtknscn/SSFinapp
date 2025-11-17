@@ -1,3 +1,4 @@
+using MaterialSkin.Controls;
 using SSFinapp.Business.Services;
 using SSFinapp.Domain.Entities;
 using SSFinapp.UI.Helpers;
@@ -7,7 +8,7 @@ namespace SSFinapp.UI.Forms;
 /// <summary>
 /// Ürün yönetimi formu
 /// </summary>
-public partial class ProductManagementForm : Form
+public partial class ProductManagementForm : MaterialForm
 {
     private readonly IStockService _stockService;
     private readonly IExportService _exportService;
@@ -18,6 +19,19 @@ public partial class ProductManagementForm : Form
         _exportService = exportService;
         InitializeComponent();
         LoadProducts();
+        SetupKeyboardShortcuts();
+    }
+    
+    private void SetupKeyboardShortcuts()
+    {
+        KeyboardHelper.SetupKeyboardShortcuts(
+            this,
+            onInsert: () => btnAdd_Click(btnAdd, EventArgs.Empty), // INS: Yeni ürün ekle
+            onDelete: () => btnDelete_Click(btnDelete, EventArgs.Empty), // DEL: Seçili ürünü sil
+            onF5: () => btnRefresh_Click(btnRefresh, EventArgs.Empty), // F5: Yenile
+            onF3: () => txtSearch.Focus(), // F3: Arama kutusuna odaklan
+            onEscape: () => btnClose_Click(btnClose, EventArgs.Empty) // ESC: Kapat
+        );
     }
     
     private async void LoadProducts()

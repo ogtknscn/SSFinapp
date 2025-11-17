@@ -1,9 +1,11 @@
+using MaterialSkin.Controls;
 using SSFinapp.Business.Services;
 using SSFinapp.Domain.Entities;
+using SSFinapp.UI.Helpers;
 
 namespace SSFinapp.UI.Forms;
 
-public partial class CustomerEditForm : Form
+public partial class CustomerEditForm : MaterialForm
 {
     private readonly ICurrentAccountService _currentAccountService;
     private int? _customerId;
@@ -12,6 +14,16 @@ public partial class CustomerEditForm : Form
     {
         _currentAccountService = currentAccountService;
         InitializeComponent();
+        SetupKeyboardShortcuts();
+    }
+    
+    private void SetupKeyboardShortcuts()
+    {
+        KeyboardHelper.SetupKeyboardShortcuts(
+            this,
+            onEnter: () => btnSave_Click(btnSave, EventArgs.Empty), // ENTER: Kaydet
+            onEscape: () => btnCancel_Click(btnCancel, EventArgs.Empty) // ESC: İptal
+        );
     }
     
     public async void LoadCustomer(int customerId)

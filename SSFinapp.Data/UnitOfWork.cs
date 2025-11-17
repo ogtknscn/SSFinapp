@@ -15,19 +15,25 @@ public class UnitOfWork : IUnitOfWork
     public IStockTransactionRepository StockTransactions { get; }
     public ICustomerRepository Customers { get; }
     public ICurrentAccountTransactionRepository CurrentAccountTransactions { get; }
+    public ICashAccountRepository CashAccounts { get; }
+    public ICashTransactionRepository CashTransactions { get; }
     
     public UnitOfWork(
         ApplicationDbContext context,
         IProductRepository productRepository,
         IStockTransactionRepository stockTransactionRepository,
         ICustomerRepository customerRepository,
-        ICurrentAccountTransactionRepository currentAccountTransactionRepository)
+        ICurrentAccountTransactionRepository currentAccountTransactionRepository,
+        ICashAccountRepository cashAccountRepository,
+        ICashTransactionRepository cashTransactionRepository)
     {
         _context = context;
         Products = productRepository;
         StockTransactions = stockTransactionRepository;
         Customers = customerRepository;
         CurrentAccountTransactions = currentAccountTransactionRepository;
+        CashAccounts = cashAccountRepository;
+        CashTransactions = cashTransactionRepository;
     }
     
     public async Task<int> SaveChangesAsync()
